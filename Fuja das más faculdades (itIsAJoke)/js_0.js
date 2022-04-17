@@ -1,7 +1,7 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 //----------------------------------------------------------------------------------------------------------------------
-
+//Pegar a posição do mouse na tela
 let x_mouse, y_mouse;
 canvas.addEventListener("mousemove", function(evento) {
     rect = canvas.getBoundingClientRect();
@@ -84,14 +84,14 @@ function puc_move(){
 let x_mack = 0; let y_mack = 0; let k =1;
 let mack = new Image(); mack.src = "mackenzie.png"; function mack_move(){
     if ( (x_mack<=canvas.width-40) && (y_mack<=canvas.height-40) && (k===1) ){
-        x_mack += 4;
+        x_mack += 5.6;
         y_mack += 4;
     }
     else{
         k=0;
     }
     if ( (x_mack>=0) && (y_mack>=0) && (k===0) ){
-        x_mack -= 4;
+        x_mack -= 5.6;
         y_mack -= 4;
     }
     else{
@@ -105,17 +105,45 @@ let mack = new Image(); mack.src = "mackenzie.png"; function mack_move(){
 
 //----------------------------------------------------------------------------------------------------------------------
 
+//POLI + movimentação
+let x_poli = getRandomInt(430); let y_poli = getRandomInt(430);
+let poli = new Image(); poli.src="poli.png"; function poli_move() {
+
+    //FEI -> Y>
+    if (y_mouse-30 >= y_poli){
+        y_poli += 1;
+    }
+    //FEI -> Y<
+    else if (y_mouse-30 < y_poli){
+        y_poli -= 1;
+    }
+    //FEI -> x<
+    if (x_mouse-30 < x_poli){
+        x_poli -= 7;
+    }
+    //FEI -> x>
+    else if (x_mouse-30 >= x_poli){
+        x_poli += 7;
+    };
+    ctx.beginPath();
+    ctx.drawImage(poli, x_poli, y_poli, 60, 60);
+
+};
+
+//----------------------------------------------------------------------------------------------------------------------
+
+
 //Anhembi + movimentação
 let x_anhembi = getRandomInt(430); let y_anhembi = getRandomInt(430);
 let anhembi = new Image(); anhembi.src='anhembi.png'; function anhembi_move() {
 
     //FEI -> Y>
     if (y_mouse-20 >= y_anhembi){
-        y_anhembi += 3;
+        y_anhembi += 5;
     }
     //FEI -> Y<
     else if (y_mouse-20 < y_anhembi){
-        y_anhembi -= 3;
+        y_anhembi -= 5;
     }
     //FEI -> x<
     if (x_mouse-40 < x_anhembi){
@@ -145,7 +173,7 @@ function main(){
 
     ctx.beginPath(); ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    fei_move(); maua_move(); puc_move(); mack_move(); anhembi_move();
+    fei_move(); maua_move(); puc_move(); mack_move(); anhembi_move(); poli_move();
 
 }; main();
 
