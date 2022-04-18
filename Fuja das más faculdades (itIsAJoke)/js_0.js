@@ -7,7 +7,6 @@ canvas.addEventListener("mousemove", function(evento) {
     rect = canvas.getBoundingClientRect();
     x_mouse = evento.clientX - rect.left;
     y_mouse = evento.clientY - rect.top;
-    console.log(x_mouse,y_mouse);
 });
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -19,10 +18,12 @@ function getRandomInt(max) {
 //----------------------------------------------------------------------------------------------------------------------
 
 //FEI + movimentação
-let fei = new Image(); fei.src = "fei.png"; let x_fei =(x_mouse-20); let y_fei = (y_mouse-20);function fei_move(){
+let fei = new Image(); fei.src = "fei.png";function fei_move(){
+    var x_fei =(x_mouse-20);
+    var y_fei = (y_mouse-20);
     if ((x_mouse<=canvas.width) && (y_mouse<=canvas.height)) {
         ctx.beginPath();
-        ctx.drawImage(fei, x_mouse-20, y_mouse - 20, 40, 40);
+        ctx.drawImage(fei, (x_mouse-20), (y_mouse-20), 40, 40);
     }
 };
 
@@ -56,7 +57,7 @@ let maua = new Image(); maua.src='maua.jpg'; function maua_move() {
 //----------------------------------------------------------------------------------------------------------------------
 
 //PUC + movimentação
-let x_puc=275-20; let y_puc = 275-20; let puc = new Image(); puc.src = "puc.png"; let i = 0;
+let x_puc=275; let y_puc = 275; let puc = new Image(); puc.src = "puc.png"; let i = 0;
 function puc_move(){
 
     if ( (y_puc<=canvas.height-70) && (i===1) ){
@@ -64,14 +65,14 @@ function puc_move(){
     }
     else{
         i=0;
-        x_puc = 275 + 30;
+        x_puc = 350 + 70;
     }
     if ( (y_puc>=0) && (i===0) ){
         y_puc -= 4;
     }
     else{
         i=1;
-        x_puc = 275 - 70;
+        x_puc = 350 - 100;
     }
 
     ctx.beginPath();
@@ -165,15 +166,39 @@ let anhembi = new Image(); anhembi.src='anhembi.png'; function anhembi_move() {
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------
 
+//Função para verificar as colisoes:
+let verify = 0;
+function colisao(x1,y1,w1,h1,x2,y2){
+    if ( (x2>=x1 && x2<=(x1 + w1)) && ( (y2>=y1 && y2<=(y1 + h1)) ) ){
+        verify = 1;
+    }
+    return verify;
+}
 
 
 //Função Principal;
 function main(){
-    requestAnimationFrame(main);
 
     ctx.beginPath(); ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     fei_move(); maua_move(); puc_move(); mack_move(); anhembi_move(); poli_move();
+
+    let verificacao=0;
+
+    verificacao = colisao(x_maua,y_maua,80,40,(x_mouse-20),(y_mouse-20));
+    verificacao = colisao(x_puc,y_puc,50,70,(x_mouse-20),(y_mouse-20));
+    verificacao = colisao(x_mack,y_mack,40,40,(x_mouse-20),(y_mouse-20));
+    verificacao = colisao(x_poli,y_poli,60,60,(x_mouse-20),(y_mouse-20));
+    verificacao = colisao(x_anhembi,y_anhembi,40,40,(x_mouse-20),(y_mouse-20));
+
+    if ( verificacao === 0 ){
+        requestAnimationFrame(main);
+    }
+    else{
+        ctx.beginPath(); ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        window.alert("OPA!!!")
+    }
 
 }; main();
 

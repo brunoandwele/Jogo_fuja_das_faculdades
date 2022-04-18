@@ -10,3 +10,14 @@ body {
 
     display:block; margin: 0 auto;
 }
+
+div{
+    border: 2px solid black; border-radius: 3px;
+
+    background-color: white;
+
+    display: flex; flex-flow: column wrap; gap: 0px 0px;
+    align-items: center; margin: 0 auto;
+
+    width:600px;
+}
