@@ -204,7 +204,7 @@ function main(){
         //Se houver colisão ele limpa o canvas e para de rodar o código, alertando que "Bateu";
 
         ctx.beginPath(); ctx.clearRect(0, 0, canvas.width, canvas.height);
-        window.alert("OPA!!! " + " Créditos logo abaixo!")
+        window.alert('OPA!!! Caso queira jogar novamente, clique "F5"' + " (OBS: Créditos logo abaixo!)")
     }
 
 }; main(); //Chamando a função principal;
